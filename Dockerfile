@@ -12,11 +12,6 @@ WORKDIR /home/node
 # Install app dependencies
 COPY . /home/node
 
-RUN apk --no-cache add --virtual native-deps g++ gcc libgcc libstdc++ linux-headers make python build-base && \
-    npm config set unsafe-perm true && \
-    npm install --quiet node-gyp -g && \
-    apk del native-deps
-
 # If you are building your code for production
 # RUN npm ci --only=production
 
