@@ -5,9 +5,21 @@ import Link from "next/link";
 import { PokemonType, PokemonDetailType } from '../../type/pokemon';
 import styles from "../../styles/Details.module.css";
 
+// export async function getServerSideProps({ params }: {params: PokemonType}) {
+//   const resp = await fetch(
+//     `https://jherr-pokemon.s3.us-west-1.amazonaws.com/pokemon/${params.id}.json`
+//   );
+
+//   return {
+//     props: {
+//       pokemon: await resp.json(),
+//     }
+//   }
+// }
+
 export async function getStaticPaths() {
   const resp = await fetch(
-    "https://jherr-pokemon.s3.us-west-1.amazonaws.com/index.json"
+    "https://sidebyside-images.s3.ap-southeast-1.amazonaws.com/config/pokemon-index.json"
   );
   const pokemon = await resp.json();
 
@@ -28,7 +40,7 @@ export async function getStaticProps({ params }: {params: PokemonType}) {
     props: {
       pokemon: await resp.json(),
     },
-    // revalidate: 30,
+    revalidate: 10,
   };
 }
 

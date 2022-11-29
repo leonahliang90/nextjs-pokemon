@@ -4,9 +4,18 @@ import React, { useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css'
 import { PokemonType } from '../type/pokemon';
 
+// export async function getServerSideProps() {
+//   const resp = await fetch("https://sidebyside-images.s3.ap-southeast-1.amazonaws.com/config/pokemon-index.json");
+//   return {
+//     props: {
+//       pokemon: await resp.json(),
+//     }
+//   }
+// }
+
 export async function getStaticProps() {
   const resp = await fetch(
-    "https://jherr-pokemon.s3.us-west-1.amazonaws.com/index.json"
+    "https://sidebyside-images.s3.ap-southeast-1.amazonaws.com/config/pokemon-index.json"
   );
 
   return {
