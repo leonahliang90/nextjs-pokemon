@@ -14,6 +14,7 @@ COPY . /home/node
 
 # If you are building your code for production
 # RUN npm ci --only=production
+RUN rm -rf node_modules && rm -rf package-lock.json && npm i
 
 EXPOSE 3000
 CMD npm run build && npm run start
