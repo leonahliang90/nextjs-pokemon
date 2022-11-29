@@ -10,4 +10,4 @@ docker system prune -f
 docker pull 560002854641.dkr.ecr.ap-southeast-1.amazonaws.com/pokemon
 
 # start image
-docker run --restart=always -td -p 3000:3000 560002854641.dkr.ecr.ap-southeast-1.amazonaws.com/pokemon
+docker run --restart=always -td -p 80:3000 560002854641.dkr.ecr.ap-southeast-1.amazonaws.com/pokemon
