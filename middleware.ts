@@ -5,7 +5,8 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
 
   const requestHeaders = new Headers(request.headers)
-  requestHeaders.set('Leon-Request-Header', 'v13.0.0');
+  requestHeaders.set('leon-request-header', 'v13.0.0');
+  requestHeaders.set('x-hello-from-middleware1', 'hello')
 
   // You can also set request headers in NextResponse.rewrite
   const response = NextResponse.next({
@@ -15,7 +16,7 @@ export function middleware(request: NextRequest) {
     },
   })
 
-  response.headers.set('Leon-Cache-Control', 'public, s-maxage=10, stale-while-revalidate=10');
+  response.headers.set('Leon-Custom-Cache-Control', 'public, s-maxage=10, stale-while-revalidate=10');
   response.headers.set('Cloudflare-CDN-Cache-Control', 'public, s-maxage=10, stale-while-revalidate=10');
   response.headers.set('CDN-Cache-Control', 'public, s-maxage=10, stale-while-revalidate=10');
   response.headers.set('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=10');
