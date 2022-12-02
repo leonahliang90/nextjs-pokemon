@@ -8,10 +8,13 @@ import { PokemonType } from '../type/pokemon';
 export async function getServerSideProps({ res }: GetServerSidePropsContext) {
   const resp = await fetch("https://sidebyside-images.s3.ap-southeast-1.amazonaws.com/config/pokemon-index.json");
 
-  res.setHeader(
-    'Cache-Control',
-    'public, max-age=60, stale-while-revalidate=10'
-  )
+  // res.setHeader(
+  //   'Cache-Control',
+  //   'public, max-age=60, stale-while-revalidate=10'
+  // )
+
+  res.setHeader('Cache-Control', 'private, no-cache, max-age=0');
+  
   return {
     props: {
       pokemon: await resp.json(),
