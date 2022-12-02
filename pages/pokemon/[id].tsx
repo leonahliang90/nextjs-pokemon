@@ -13,7 +13,7 @@ export async function getServerSideProps({ res, params }: GetServerSidePropsCont
 
   res.setHeader(
     'Cache-Control',
-    'public, maxage=60, stale-while-revalidate=10'
+    'public, s-maxage=10, stale-while-revalidate=10'
   )
 
   return {
