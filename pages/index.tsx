@@ -1,29 +1,35 @@
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Head from 'next/head'
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css'
 import { PokemonType } from '../type/pokemon';
 
-// export async function getServerSideProps() {
-//   const resp = await fetch("https://sidebyside-images.s3.ap-southeast-1.amazonaws.com/config/pokemon-index.json");
-//   return {
-//     props: {
-//       pokemon: await resp.json(),
-//     }
-//   }
-// }
+export async function getServerSideProps({ res }: GetServerSidePropsContext) {
+  const resp = await fetch("https://sidebyside-images.s3.ap-southeast-1.amazonaws.com/config/pokemon-index.json");
 
-export async function getStaticProps() {
-  const resp = await fetch(
-    "https://sidebyside-images.s3.ap-southeast-1.amazonaws.com/config/pokemon-index.json"
-  );
-
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=10'
+  )
   return {
     props: {
       pokemon: await resp.json(),
-    },
-  };
+    }
+  }
 }
+
+// export async function getStaticProps() {
+//   const resp = await fetch(
+//     "https://sidebyside-images.s3.ap-southeast-1.amazonaws.com/config/pokemon-index.json"
+//   );
+
+//   return {
+//     props: {
+//       pokemon: await resp.json(),
+//     },
+//   };
+// }
 
 export default function Home( { pokemon }: { pokemon: PokemonType[]}) {
   return (

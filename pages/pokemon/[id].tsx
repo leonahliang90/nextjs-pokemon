@@ -4,8 +4,40 @@ import Head from "next/head";
 import Link from "next/link";
 import { PokemonType, PokemonDetailType } from '../../type/pokemon';
 import styles from "../../styles/Details.module.css";
+import { GetServerSidePropsContext } from "next";
 
-// export async function getServerSideProps({ params }: {params: PokemonType}) {
+export async function getServerSideProps({ res, params }: GetServerSidePropsContext & { params: PokemonType }) {
+  const resp = await fetch(
+    `https://jherr-pokemon.s3.us-west-1.amazonaws.com/pokemon/${params.id}.json`
+  );
+
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, maxage=10, stale-while-revalidate=10'
+  )
+
+  return {
+    props: {
+      pokemon: await resp.json(),
+    }
+  }
+}
+
+// export async function getStaticPaths() {
+//   const resp = await fetch(
+//     "https://sidebyside-images.s3.ap-southeast-1.amazonaws.com/config/pokemon-index.json"
+//   );
+//   const pokemon = await resp.json();
+
+//   return {
+//     paths: pokemon.map((pokemon: PokemonType) => ({
+//       params: { id: pokemon.id.toString() },
+//     })),
+//     fallback: false,
+//   };
+// }
+
+// export async function getStaticProps({ params }: {params: PokemonType}) {
 //   const resp = await fetch(
 //     `https://jherr-pokemon.s3.us-west-1.amazonaws.com/pokemon/${params.id}.json`
 //   );
@@ -13,36 +45,10 @@ import styles from "../../styles/Details.module.css";
 //   return {
 //     props: {
 //       pokemon: await resp.json(),
-//     }
-//   }
+//     },
+//     revalidate: 10,
+//   };
 // }
-
-export async function getStaticPaths() {
-  const resp = await fetch(
-    "https://sidebyside-images.s3.ap-southeast-1.amazonaws.com/config/pokemon-index.json"
-  );
-  const pokemon = await resp.json();
-
-  return {
-    paths: pokemon.map((pokemon: PokemonType) => ({
-      params: { id: pokemon.id.toString() },
-    })),
-    fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }: {params: PokemonType}) {
-  const resp = await fetch(
-    `https://jherr-pokemon.s3.us-west-1.amazonaws.com/pokemon/${params.id}.json`
-  );
-
-  return {
-    props: {
-      pokemon: await resp.json(),
-    },
-    revalidate: 10,
-  };
-}
 
 export default function Details({ pokemon }: { pokemon: PokemonDetailType}) {
   return (
