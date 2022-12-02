@@ -16,9 +16,5 @@ export function middleware(request: NextRequest) {
     },
   })
 
-  response.headers.set('Leon-Custom-Cache-Control', 'public, s-maxage=10, stale-while-revalidate=10');
-  response.headers.set('Cloudflare-CDN-Cache-Control', 'public, s-maxage=10, stale-while-revalidate=10');
-  response.headers.set('CDN-Cache-Control', 'public, s-maxage=10, stale-while-revalidate=10');
-  response.headers.set('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=10');
   return response;
 }
